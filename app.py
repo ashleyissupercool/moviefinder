@@ -318,7 +318,7 @@ with tabs[0]:
 
     search_mode = st.radio(
         "How do you want to search?",
-        ["✏️ Describe it", "▶️ YouTube link", "📁 Upload a clip"],
+        ["✏️ Describe it", "▶️ YouTube link"],
         horizontal=True,
         label_visibility="collapsed",
     )
@@ -355,29 +355,6 @@ with tabs[0]:
             loading.empty()
             if video_description.startswith("(Gemini unavailable"):
                 st.error("Could not process the video. Check the link and try again.")
-                do_search = False
-            else:
-                user_query = video_description
-
-    elif search_mode == "📁 Upload a clip":
-        uploaded_file = st.file_uploader(
-            "Upload a short movie clip (mp4, mov, avi):",
-            type=["mp4", "mov", "avi", "mkv"],
-        )
-        do_search = st.button("🔎 Search", type="primary", use_container_width=True)
-        if do_search and uploaded_file:
-            loading = st.empty()
-            loading.markdown("""
-            <div style="text-align:center; padding: 3rem 1rem;">
-                <h2 style="color:#f5c842;">🎬 Analysing your clip...</h2>
-                <p style="color:#c8a96e;">Gemini is processing your video and describing the scene.<br>This may take up to 30 seconds — please wait.</p>
-            </div>
-            """, unsafe_allow_html=True)
-            mime = uploaded_file.type or "video/mp4"
-            video_description, video_gemini_title = describe_video_clip(uploaded_file.read(), mime_type=mime)
-            loading.empty()
-            if video_description.startswith("(Gemini unavailable"):
-                st.error("Could not process the video. Try a shorter clip.")
                 do_search = False
             else:
                 user_query = video_description
