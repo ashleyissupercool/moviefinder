@@ -16,3 +16,4 @@ __pycache__/
 .vscode/data/TMDB_movies.csv
 logs/
 data/*.csv
+TMDB_dataset.zip
